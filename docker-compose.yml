@@ -27,11 +27,11 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.mysql.rule=Host(`containers.fabcomms.co.uk`) && PathPrefix(`/mysql`)
-      - traefik.http.middlewares.mysql-strip.stripprefix.prefixes=/mysql
-      - traefik.http.routers.mysql.middlewares=mysql-strip
       - traefik.http.routers.mysql.entrypoints=websecure
       - traefik.http.routers.mysql.tls=true
       - traefik.http.services.mysql.loadbalancer.server.port=80
+      - traefik.http.middlewares.mysql-prefix.headers.customrequestheaders.X-Forwarded-Prefix=/mysql
+      - traefik.http.routers.mysql.middlewares=mysql-prefix
 
 volumes:
   mysql_data:
