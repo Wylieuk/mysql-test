@@ -21,19 +21,14 @@ services:
       PMA_HOST: mysql
       PMA_USER: root
       PMA_PASSWORD: 36223
-      PMA_ABSOLUTE_URI: https://containers.fabcomms.co.uk/mysql/
     networks:
       - web
     labels:
       - traefik.enable=true
-      - traefik.http.routers.mysql.rule=Host(`containers.fabcomms.co.uk`) && PathPrefix(`/mysql`)
+      - traefik.http.routers.mysql.rule=Host(`mysql.containers.fabcomms.co.uk`)
       - traefik.http.routers.mysql.entrypoints=websecure
       - traefik.http.routers.mysql.tls=true
       - traefik.http.services.mysql.loadbalancer.server.port=80
-
-      - traefik.http.middlewares.mysql-strip.stripprefix.prefixes=/mysql
-      - traefik.http.middlewares.mysql-headers.headers.customrequestheaders.X-Forwarded-Prefix=/mysql
-      - traefik.http.routers.mysql.middlewares=mysql-strip,mysql-headers
 
 volumes:
   mysql_data:
