@@ -1,0 +1,40 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 36223
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: test
+      MYSQL_PASSWORD: testpw
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - web
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin-dev
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootpw
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mysql.rule=Host(`containers.fabcomms.co.uk`) && PathPrefix(`/mysql`)
+      - traefik.http.middlewares.mysql-strip.stripprefix.prefixes=/mysql
+      - traefik.http.routers.mysql.middlewares=mysql-strip
+      - traefik.http.routers.mysql.entrypoints=websecure
+      - traefik.http.routers.mysql.tls=true
+      - traefik.http.services.mysql.loadbalancer.server.port=80
+
+volumes:
+  mysql_data:
+
+networks:
+  web:
+    external: true
