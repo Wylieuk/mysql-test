@@ -21,6 +21,7 @@ services:
       PMA_HOST: mysql
       PMA_USER: root
       PMA_PASSWORD: 36223
+      PMA_ABSOLUTE_URI: https://containers.fabcomms.co.uk/mysql/
     networks:
       - web
     labels:
