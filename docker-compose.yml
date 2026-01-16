@@ -20,7 +20,7 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_USER: root
-      PMA_PASSWORD: rootpw
+      PMA_PASSWORD: 36223
     networks:
       - web
     labels:
