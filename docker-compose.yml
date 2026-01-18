@@ -21,8 +21,8 @@ services:
     restart: unless-stopped
     environment:
       PMA_HOST: mysql
-      PMA_USER: root
-      PMA_PASSWORD: 36223
+      #PMA_USER: root
+      #PMA_PASSWORD: 36223
     networks:
       - web
     labels:
